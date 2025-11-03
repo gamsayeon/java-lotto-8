@@ -32,7 +32,7 @@ public class LottoAutomaticNumberTest {
         Lotto lotto = generator.generate();
 
         // Then
-        assertThat(lotto.getNumbers().size()).isEqualTo(6);
+        assertThat(lotto.getSortedNumbers().size()).isEqualTo(6);
     }
 
     @Test

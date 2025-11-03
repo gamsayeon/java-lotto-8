@@ -16,7 +16,10 @@ public class Lotto {
         }
     }
 
-    public List<Integer> getNumbers(){
-        return this.numbers;
+    public List<Integer> getSortedNumbers(){
+        return this.numbers
+                .stream()
+                .sorted()
+                .toList();
     }
 }
