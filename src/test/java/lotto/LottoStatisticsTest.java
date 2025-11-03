@@ -28,12 +28,12 @@ public class LottoStatisticsTest {
     void 로또번호_5개_일치_보너스번호_일치_당첨금_확인() {
         // given
         Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        WinningLotto winningLotto = new WinningLotto(new Lotto(List.of(1, 2, 3, 4, 5, 6)), 7);
+        WinningLotto winningLotto = new WinningLotto(new Lotto(List.of(1, 2, 3, 4, 5, 7)), 6);
 
         // when
         int matchCount = lotto.getMatchedCount(winningLotto.getWinningLotto());
         Boolean bonusMatch = lotto.getSortedNumbers().contains(winningLotto.getBonusNumber());
-        int prize = LottoResult.valueOf(matchCount, false).getPrize();
+        int prize = LottoResult.valueOf(matchCount, bonusMatch).getPrize();
 
         // then
         assertThat(matchCount).isEqualTo(5);

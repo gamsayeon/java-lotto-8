@@ -7,7 +7,6 @@ public enum LottoResult {
     FIVE_BONUS(5, 30000000),
     SIX(6, 2000000000);
 
-
     private final int matchCount;
     private final int prize;
 
@@ -16,12 +15,25 @@ public enum LottoResult {
         this.prize = prize;
     }
 
-    public static LottoResult valueOf(Integer matchCount, Boolean bonusMatch) {
-        return null;
+    public static LottoResult valueOf(Integer currentMatchCount, Boolean bonusMatch) {
+        if(currentMatchCount == 3)
+            return THREE;
+        if (currentMatchCount == 4)
+            return FOUR;
+        if (currentMatchCount == 5 && bonusMatch)
+            return FIVE_BONUS;
+        if (currentMatchCount == 5)
+            return FIVE;
+        if (currentMatchCount == 6)
+            return SIX;
+        throw new IllegalArgumentException();
     }
 
     public Integer getPrize(){
-        return 0;
+        return this.prize;
     }
 
+    public Integer getMatchCount() {
+        return this.matchCount;
+    }
 }

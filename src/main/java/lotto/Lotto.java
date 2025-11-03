@@ -24,10 +24,16 @@ public class Lotto {
     }
 
     public boolean isBonusMatched(WinningLotto winningLotto) {
-        return false; // 임시 반환
+        return this.numbers.contains(winningLotto.getBonusNumber());
     }
 
     public Integer getMatchedCount(Lotto winningLotto) {
-        return 0;
+        int matchCount = 0;
+        for (Integer number : this.numbers) {
+            if (winningLotto.getSortedNumbers().contains(number)) {
+                matchCount++;
+            }
+        }
+        return matchCount;
     }
 }

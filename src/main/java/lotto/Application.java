@@ -10,10 +10,17 @@ public class Application {
 
         LottoAutomaticNumber lottoAutomaticNumber = new LottoAutomaticNumber();
         Integer lottoCount = lottoAutomaticNumber.calculateTicketCount(purchaseAmount);
-        printLottos(lottoAutomaticNumber.generateMultiple(lottoCount));
+        List<Lotto> purchasedLottos = lottoAutomaticNumber.generateMultiple(lottoCount);
+        printLottos(purchasedLottos);
 
         WinningLotto winningLotto = readWinningLotto();
         System.out.println();
+
+        LottoStatistics statistics = new LottoStatistics();
+        for (Lotto lotto : purchasedLottos) {
+            statistics.addLotto(lotto, winningLotto);
+        }
+        statistics.printStatistics();
     }
 
     public static Integer readPurchaseAmount(){
