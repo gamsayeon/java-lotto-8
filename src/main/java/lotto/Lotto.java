@@ -22,4 +22,12 @@ public class Lotto {
                 .sorted()
                 .toList();
     }
+
+    public boolean isBonusMatched(WinningLotto winningLotto) {
+        return false; // 임시 반환
+    }
+
+    public Integer getMatchedCount(Lotto winningLotto) {
+        return 0;
+    }
 }
