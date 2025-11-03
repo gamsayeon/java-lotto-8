@@ -23,27 +23,62 @@ public class Application {
         statistics.printStatistics(purchaseAmount);
     }
 
-    public static Integer readPurchaseAmount(){
-        System.out.println("구입금액을 입력해 주세요.");
-        return Integer.parseInt(Console.readLine());
+
+    public static Integer readPurchaseAmount() {
+        while (true) {
+            try {
+                System.out.println("구입금액을 입력해 주세요.");
+                int amount = Integer.parseInt(Console.readLine());
+                if (amount <= 0 || amount % 1000 != 0) {
+                    throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위의 양수여야 합니다.");
+                }
+                return amount;
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 숫자만 입력 가능합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    public static WinningLotto readWinningLotto() {
-        System.out.println("당첨 번호를 입력해 주세요.");
-        String input = Console.readLine();
-        Lotto numbers = new Lotto(convertToNumbers(input));
 
-        System.out.println("보너스 번호를 입력해 주세요.");
-        Integer bonusLottoNumber = Integer.parseInt(Console.readLine());
-        return new WinningLotto(numbers, bonusLottoNumber);
+    public static WinningLotto readWinningLotto() {
+        Lotto lottoNumbers;
+        while (true) {
+            try {
+                System.out.println("당첨 번호를 입력해 주세요.");
+                String input = Console.readLine();
+                lottoNumbers = new Lotto(convertToNumbers(input));
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        Integer bonusNumber;
+        while (true) {
+            try {
+                System.out.println("보너스 번호를 입력해 주세요.");
+                bonusNumber = Integer.parseInt(Console.readLine());
+                return new WinningLotto(lottoNumbers, bonusNumber);
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 숫자만 입력 가능합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public static List<Integer> convertToNumbers(String input){
-        String[] splitInput = input.split(",");
-        return Arrays.stream(splitInput)
-                .map(String::trim)
-                .map(Integer::parseInt)
-                .toList();
+        try {
+            String[] splitInput = input.split(",");
+            return Arrays.stream(splitInput)
+                    .map(String::trim)
+                    .map(Integer::parseInt)
+                    .toList();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 숫자만 입력 가능합니다.");
+        }
     }
 
     public static void printLottos(List<Lotto> lottos){
