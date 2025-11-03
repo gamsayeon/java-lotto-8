@@ -36,4 +36,8 @@ public class LottoStatistics {
         }
         System.out.println();
     }
+
+    public double calculateYield(double purchaseAmount, double totalPurchaseAmount) {
+        return 0.0;
+    }
 }

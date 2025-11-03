@@ -56,4 +56,22 @@ public class LottoStatisticsTest {
         assertThat(matchCount).isEqualTo(6);
         assertThat(prize).isEqualTo(2000000000);
     }
+
+    @Test
+    @DisplayName("총 당첨금과 구입 금액으로 수익률 계산 테스트")
+    void 수익률_계산_테스트() {
+        // given
+        double purchaseAmount = 10000; // 예: 1장 1000원 * 10장
+        double totalPrizeAmount = 6500000;  // 예: 당첨금 합계
+
+        LottoStatistics statistics = new LottoStatistics();
+
+        // when
+        double yield = statistics.calculateYield(purchaseAmount, totalPrizeAmount);
+
+        // then
+        // 기대 수익률 = (총 당첨금 / 구입금액) * 100
+        // 6500000 ÷ 10000 × 100 = 65000%
+        assertThat(yield).isEqualTo(65000.0);
+    }
 }
