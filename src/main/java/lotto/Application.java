@@ -20,7 +20,7 @@ public class Application {
         for (Lotto lotto : purchasedLottos) {
             statistics.addLotto(lotto, winningLotto);
         }
-        statistics.printStatistics();
+        statistics.printStatistics(purchaseAmount);
     }
 
     public static Integer readPurchaseAmount(){

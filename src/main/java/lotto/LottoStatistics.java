@@ -1,5 +1,6 @@
 package lotto;
 
+import java.text.DecimalFormat;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -22,22 +23,34 @@ public class LottoStatistics {
         }
     }
 
-    public void printStatistics() {
-        System.out.println("당첨 통계");
-        System.out.println("---------");
+    public void printStatistics(double purchaseAmount) {
+        StringBuilder printBuilder = new StringBuilder();
+        printBuilder.append("당첨 통계\n");
+        printBuilder.append("---------\n");
         for (LottoResult result : LottoResult.values()) {
             int count = statistics.get(result);
-            System.out.printf("%s개 일치%s (%s원) - %d개%n",
+            String line = String.format("%d개 일치%s (%s원) - %d개%n",
                     result.getMatchCount(),
                     result == LottoResult.FIVE_BONUS ? ", 보너스 볼 일치" : "",
                     String.format("%,d", result.getPrize()),
                     count);
-
+            printBuilder.append(line);
         }
-        System.out.println();
+        double yield = calculateYield(purchaseAmount,
+                statistics.entrySet().stream()
+                        .mapToInt(entry -> entry.getKey().getPrize() * entry.getValue())
+                        .sum()
+        );
+        DecimalFormat df = new DecimalFormat("#.##");
+        String yieldStr = df.format(yield);
+
+        printBuilder.append(String.format("총 수익률은 %s%%입니다.%n", yieldStr));
+
+        System.out.println(printBuilder);
     }
 
     public double calculateYield(double purchaseAmount, double totalPurchaseAmount) {
-        return 0.0;
+        double totalYield = (totalPurchaseAmount / purchaseAmount) * 100;
+        return Math.round(totalYield * 100) / 100.0;
     }
 }
